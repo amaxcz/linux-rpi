@@ -133,14 +133,14 @@ void validate_enable(void) {
 /* ----------------------------- get_pwm_device ----------------------------- */
 
 int get_pwm_device(struct pwm_device **pwm_device_ptr, int pwm_number) {
-    int ret; 
+    int ret;
     *pwm_device_ptr = pwm_request(pwm_number, DEVICE_NAME);
     if (IS_ERR(*pwm_device_ptr)) {
         ret = PTR_ERR(*pwm_device_ptr);
         if (ret != -EPROBE_DEFER) {
             pr_err("pwm_request failed for pwm-%d: %d\n", pwm_number, ret);
         }
-        return ret; 
+        return ret;
     }
     print_pwm_device_info(*pwm_device_ptr);
     return 0;
@@ -276,7 +276,7 @@ static int __init my_test_init(void)
             pr_err("No PWM device found\n");
             return -ENODEV;
         }
-        
+
         print_pwm_state_info(pwm);
 
         // set_pwm_params(pwm, 200, 1);
@@ -307,11 +307,13 @@ static int __init my_test_init(void)
             enable = 0;
         }
     }
-    
+
     pr_debug("__init end\n");
 
     return ret;
 }
+
+/* ------------------------------------ - ----------------------------------- */
 
 static void __exit my_test_exit(void)
 {
@@ -330,6 +332,7 @@ static void __exit my_test_exit(void)
 }
 
 
+/* ------------------------------------ - ----------------------------------- */
 
 
 static int test_probe(struct platform_device *pdev){
@@ -344,7 +347,7 @@ static int test_probe(struct platform_device *pdev){
     }
 
 
-    ///////////////////////////////////////////////////////////////////////
+/* ------------------------------------ - ----------------------------------- */
 
     ret = of_property_read_u32(np, "pwm_channel", &_pwm_channel);
     if (ret) {
@@ -360,7 +363,7 @@ static int test_probe(struct platform_device *pdev){
     pwm_channel = _pwm_channel;
     validate_pwm_channel();
 
-    ///////////////////////////////////////////////////////////////////////
+/* ------------------------------------ - ----------------------------------- */
 
     ret = of_property_read_u32(np, "hz", &_hz);
     if (ret) {
@@ -377,7 +380,7 @@ static int test_probe(struct platform_device *pdev){
     validate_hz();
 
 
-    ///////////////////////////////////////////////////////////////////////
+/* ------------------------------------ - ----------------------------------- */
 
     ret = of_property_read_u32(np, "duty_cycle", &_duty_cycle);
     if (ret) {
@@ -393,7 +396,7 @@ static int test_probe(struct platform_device *pdev){
     duty_cycle = _duty_cycle;
     validate_duty_cycle();
 
-    ///////////////////////////////////////////////////////////////////////
+/* ------------------------------------ - ----------------------------------- */
 
     ret = of_property_read_u32(np, "enable", &_enable);
     if (ret) {
@@ -405,11 +408,11 @@ static int test_probe(struct platform_device *pdev){
     ret = sysfs_create_file(my_kobj, &enable_attribute.attr);
     if (ret)
         kobject_put(my_kobj);
-    
+
     enable = _enable;
     validate_enable();
 
-    ///////////////////////////////////////////////////////////////////////
+/* ------------------------------------ - ----------------------------------- */
 
     // static initialization
     my_test_init();
@@ -436,10 +439,12 @@ static struct platform_driver test_driver = {
                 .of_match_table = of_test_match,
         },
 };
+
 module_platform_driver(test_driver);
 
 // For manual testing without .dts and probing
 // module_init(my_test_init);
 // module_exit(my_test_exit);
+
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Aleksey Maximov <amaxcz@gmail.com>");
