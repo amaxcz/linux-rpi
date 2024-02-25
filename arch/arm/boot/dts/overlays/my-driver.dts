@@ -1,0 +1,19 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2835";
+    fragment@0 {
+        target-path = "/";
+        __overlay__ {
+            test-controller {
+                    compatible = "my-driver";
+                    pwm_channel = <0>;
+                    duty_cycle = <32>;
+                    hz = <2>;
+                    enable = <1>;
+            };
+
+        };
+    };
+};

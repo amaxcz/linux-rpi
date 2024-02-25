@@ -110,3 +110,6 @@ obj-y					+= blink/
 
 # Simple LED drivers
 obj-y					+= simple/
+
+# Test LED drivers
+obj-y                                   += test/

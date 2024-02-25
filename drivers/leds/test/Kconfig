@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config LEDS_MY_DRIVER
+	tristate "LED driver for Raspberry Pi (my-driver)"
+	depends on LEDS_GPIO
+	help
+	  Device driver for the Raspberry Pi that provides a sysfs interface to control an
+	  LED light by setting Pulse Width Modulation (PWM).
+
+	  To compile this driver as a module, choose M here: the modules
+	  will be called my-driver.
